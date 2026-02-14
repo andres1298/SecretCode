@@ -31,8 +31,8 @@ export const config: GameConfig = {
     theme: "Tatuaje",
 
     // Pantalla de introducción
-    introTitle: "🎭 El Impostor — Mari Special Edition",
-    introMessage: "Hay un impostor entre tus amigos. Todos conocen la temática secreta… excepto uno de ellos. Recopila las pistas de cada jugador y descubre quién es el impostor.",
+    introTitle: "🎭 El Impostor",
+    introMessage: "¡Eres la Game Master! Hay un impostor entre tus amigos: todos recibieron una categoría secreta… menos uno. Tu misión es preguntarle a cada persona la pista que le dieron a Pondi e ingresarla aquí. Así recopilarás toda la información necesaria para descubrir quién es el impostor.",
     introHint: "Psst… si logras resolver todo, hay una sorpresita esperándote al final ✨",
 
     // Jugadores con sus pistas

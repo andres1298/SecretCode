@@ -17,11 +17,12 @@ import GiftCoupon from '@/components/GiftCoupon';
 import CompletedStageView from '@/components/CompletedStageView';
 import PlayerOverview from '@/components/PlayerOverview';
 import SecondaryPlayerView from '@/components/SecondaryPlayerView';
+import StageTransition from '@/components/StageTransition';
 
 const STORAGE_KEY = 'impostor_game_progress';
 
 type GameMode = 'mari' | 'secondary' | 'admin';
-type GamePhase = 'mode-select' | 'pin-entry' | 'intro' | 'collecting' | 'selecting' | 'guessing' | 'victory' | 'defeat' | 'reviewing' | 'secondary-play' | 'admin-view';
+type GamePhase = 'mode-select' | 'pin-entry' | 'intro' | 'collecting' | 'transition-to-selecting' | 'selecting' | 'transition-to-guessing' | 'guessing' | 'victory' | 'defeat' | 'reviewing' | 'secondary-play' | 'admin-view';
 
 interface GameState {
     phase: GamePhase;
@@ -168,7 +169,7 @@ export default function Home() {
                 ...gameState,
                 collectedClues: newClues,
                 completedPlayerIndices: newCompleted,
-                phase: 'selecting'
+                phase: 'transition-to-selecting'
             });
         } else {
             let nextIndex = (currentIdx + 1) % totalPlayers;
@@ -189,7 +190,7 @@ export default function Home() {
             setGameState({
                 ...gameState,
                 selectedImpostorIndex: playerIndex,
-                phase: 'guessing',
+                phase: 'transition-to-guessing',
                 lastWrongGuessName: null
             });
         } else {
@@ -466,6 +467,36 @@ export default function Home() {
                 >
                     ← Volver al inicio
                 </button>
+            </main>
+        );
+    }
+
+    // === Transición: Recopilación → Selección del impostor ===
+    if (gameState.phase === 'transition-to-selecting') {
+        return (
+            <main className="min-h-screen">
+                <StageTransition
+                    emoji="🎉"
+                    title="¡Todas las pistas recopiladas!"
+                    message="Buen trabajo, chiquitina. Ya tienes toda la información. Ahora observa bien las pistas y descubre quién es el impostor."
+                    buttonText="Continuar →"
+                    onContinue={() => setGameState({ ...gameState, phase: 'selecting' })}
+                />
+            </main>
+        );
+    }
+
+    // === Transición: Impostor identificado → Adivinar temática ===
+    if (gameState.phase === 'transition-to-guessing') {
+        return (
+            <main className="min-h-screen">
+                <StageTransition
+                    emoji="🕵️‍♀️"
+                    title="¡Impostor descubierto!"
+                    message="¡Lograste identificar al impostor! Buen trabajo, chiquitina. Ahora queda el último reto: ¿cuál era la categoría secreta?"
+                    buttonText="Continuar →"
+                    onContinue={() => setGameState({ ...gameState, phase: 'guessing' })}
+                />
             </main>
         );
     }
