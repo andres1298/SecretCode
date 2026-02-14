@@ -1,19 +1,8 @@
-'use client';
-
 export interface Player {
     name: string;
     photo: string;
     clue: string;
     isImpostor: boolean;
-}
-
-export interface FinalMessage {
-    winTitle: string;
-    winSubtitle: string;
-    winMessage: string;
-    loseTitle: string;
-    loseSubtitle: string;
-    loseMessage: string;
 }
 
 export interface GameConfig {
@@ -22,8 +11,20 @@ export interface GameConfig {
     introMessage: string;
     introHint: string;
     players: Player[];
-    finalMessage: FinalMessage;
+    finalMessage: {
+        victory: string;
+        defeat: string;
+    };
     images: string[];
+}
+
+// Interfaz para las etapas completadas
+export interface CompletedStage {
+    phrase: string;
+    hint: string;
+    playerName: string;
+    playerPhoto: string;
+    isImpostor: boolean;
 }
 
 export const config: GameConfig = {
@@ -50,48 +51,6 @@ export const config: GameConfig = {
             isImpostor: false
         },
         {
-            name: "Cami",
-            photo: "/cami.jpeg",
-            clue: "Marca",
-            isImpostor: false
-        },
-        {
-            name: "AleJ",
-            photo: "/alej.jpeg",
-            clue: "Piel",
-            isImpostor: false
-        },
-        {
-            name: "AleQ",
-            photo: "/aleq.jpeg",
-            clue: "iPod",
-            isImpostor: false
-        },
-        {
-            name: "MariU",
-            photo: "/mariu.jpeg",
-            clue: "Vaquita",
-            isImpostor: false
-        },
-        {
-            name: "Isa",
-            photo: "/isa.jpeg",
-            clue: "3",
-            isImpostor: false
-        },
-        {
-            name: "Alonso",
-            photo: "/alonso.jpeg",
-            clue: "Geométrico",
-            isImpostor: false
-        },
-        {
-            name: "Lu",
-            photo: "/lu.jpeg",
-            clue: "Rauw Alejandro",
-            isImpostor: false
-        },
-        {
             name: "Ange",
             photo: "/ange.jpeg",
             clue: "Expresión",
@@ -109,31 +68,69 @@ export const config: GameConfig = {
             clue: "Capas",
             isImpostor: false
         },
+        {
+            name: "Isa",
+            photo: "/isa.jpeg",
+            clue: "3",
+            isImpostor: false
+        },
+        {
+            name: "Lu",
+            photo: "/lu.jpeg",
+            clue: "Rauw Alejandro",
+            isImpostor: false
+        },
+        {
+            name: "AleJ",
+            photo: "/alej.jpeg",
+            clue: "Piel",
+            isImpostor: false
+        },
+        {
+            name: "AleQ",
+            photo: "/aleq.jpeg",
+            clue: "iPod",
+            isImpostor: false
+        },
+        {
+            name: "Alonso",
+            photo: "/alonso.jpeg",
+            clue: "Geométrico",
+            isImpostor: false
+        },
+        {
+            name: "MariU",
+            photo: "/mariu.jpeg",
+            clue: "Vaquita",
+            isImpostor: false
+        },
+        {
+            name: "Cami",
+            photo: "/cami.jpeg",
+            clue: "Marca",
+            isImpostor: false
+        },
     ],
 
     // Mensajes finales
     finalMessage: {
-        winTitle: "🏆 ¡Victoria!",
-        winSubtitle: "Has descubierto al impostor",
-        winMessage: "Excelente trabajo, chiquitina. Has identificado al impostor y descubierto la temática secreta.",
-        loseTitle: "❌ ¡Perdiste!",
-        loseSubtitle: "El impostor ganó esta vez",
-        loseMessage: "El impostor logró pasar desapercibido. ¡Inténtalo de nuevo!"
+        victory: "¡Increíble! Descubriste al impostor y la temática secreta. ¡Eres una verdadera detective! 🎉",
+        defeat: "El impostor logró pasar desapercibido esta vez..."
     },
 
-    // Imágenes para el carrusel de victoria
+    // Imágenes para el carrusel (fotos de jugadores)
     images: [
         "/pondi.jpeg",
         "/sebas.jpeg",
-        "/cami.jpeg",
-        "/alej.jpeg",
-        "/aleq.jpeg",
-        "/mariu.jpeg",
-        "/isa.jpeg",
-        "/alonso.jpeg",
-        "/lu.jpeg",
         "/ange.jpeg",
         "/ka.jpeg",
         "/lina.jpeg",
+        "/isa.jpeg",
+        "/lu.jpeg",
+        "/alej.jpeg",
+        "/aleq.jpeg",
+        "/alonso.jpeg",
+        "/mariu.jpeg",
+        "/cami.jpeg"
     ],
 };
