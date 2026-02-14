@@ -152,7 +152,14 @@ export default function Home() {
         });
     };
 
+    // Calculate how many players are unlocked (batches of 3)
+    const getUnlockedCount = (completed: number) => {
+        return Math.min(totalPlayers, Math.floor(completed / 3) * 3 + 3);
+    };
+
     const handleSelectPlayer = (index: number) => {
+        const unlocked = getUnlockedCount(gameState.completedPlayerIndices.length);
+        if (index >= unlocked) return; // Can't select locked players
         setGameState({
             ...gameState,
             currentPlayerIndex: index
@@ -172,9 +179,13 @@ export default function Home() {
                 phase: 'transition-to-selecting'
             });
         } else {
+            const newUnlocked = getUnlockedCount(newCompleted.length);
             let nextIndex = (currentIdx + 1) % totalPlayers;
-            while (newCompleted.includes(nextIndex)) {
+            // Find next uncompleted player within unlocked range
+            let tries = 0;
+            while ((newCompleted.includes(nextIndex) || nextIndex >= newUnlocked) && tries < totalPlayers) {
                 nextIndex = (nextIndex + 1) % totalPlayers;
+                tries++;
             }
             setGameState({
                 ...gameState,
@@ -406,6 +417,7 @@ export default function Home() {
                     currentIndex={gameState.currentPlayerIndex}
                     completedIndices={gameState.completedPlayerIndices}
                     onSelectPlayer={handleSelectPlayer}
+                    unlockedCount={getUnlockedCount(gameState.completedPlayerIndices.length)}
                 />
 
                 {/* Área de contenido principal */}
