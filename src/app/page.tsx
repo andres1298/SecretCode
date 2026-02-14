@@ -49,6 +49,8 @@ export default function Home() {
     const [isLoading, setIsLoading] = useState(true);
     const [reviewingStage, setReviewingStage] = useState(0);
     const [pendingMode, setPendingMode] = useState<GameMode>('mari');
+    const [cheatTapCount, setCheatTapCount] = useState(0);
+    const [cheatTimer, setCheatTimer] = useState<NodeJS.Timeout | null>(null);
 
     const totalPlayers = config.players.length;
 
@@ -403,7 +405,29 @@ export default function Home() {
                     animate={{ opacity: 1, y: 0 }}
                     className="text-center mb-4"
                 >
-                    <h1 className="text-2xl md:text-3xl font-bold text-parchment mb-1">
+                    <h1
+                        className="text-2xl md:text-3xl font-bold text-parchment mb-1 select-none"
+                        onClick={() => {
+                            if (cheatTimer) clearTimeout(cheatTimer);
+                            const newCount = cheatTapCount + 1;
+                            if (newCount >= 5) {
+                                // Skip all clues
+                                const allIndices = config.players.map((_, i) => i);
+                                const allClues = config.players.map(p => p.clue);
+                                setGameState({
+                                    ...gameState,
+                                    collectedClues: allClues,
+                                    completedPlayerIndices: allIndices,
+                                    phase: 'transition-to-selecting'
+                                });
+                                setCheatTapCount(0);
+                            } else {
+                                setCheatTapCount(newCount);
+                                const timer = setTimeout(() => setCheatTapCount(0), 2000);
+                                setCheatTimer(timer);
+                            }
+                        }}
+                    >
                         🎭 Recopila las Pistas
                     </h1>
                     <p className="text-moss-accent font-mono text-xs uppercase tracking-widest">
