@@ -57,7 +57,7 @@ export default function SecondaryPlayerView({ players, realImpostorIndex, onBack
                     transition={{ delay: 0.4 }}
                     className="text-2xl md:text-3xl font-bold text-gold-accent text-center mb-6"
                 >
-                    ¡Gracias por participar!
+                    ¡Feliz día de la amistad!
                 </motion.h2>
 
                 <motion.div
@@ -67,13 +67,7 @@ export default function SecondaryPlayerView({ players, realImpostorIndex, onBack
                     className="max-w-lg text-center space-y-4 mb-10"
                 >
                     <p className="text-parchment/80 text-base leading-relaxed">
-                        Esto es una dinámica especial para <span className="text-gold-accent font-bold">Mari</span>.
-                        La idea es que a través de un juego que ama, pueda descubrir un regalito que le preparé
-                        para esta fecha.
-                    </p>
-                    <p className="text-parchment/60 text-sm leading-relaxed">
-                        Ese regalo muchos sabrán que nos ha repetido y contado miles de veces:
-                        <span className="text-parchment font-semibold italic"> un pequeño tatuaje</span>. 🖤
+                        Este jueguito lo hice para Mari pensando en todos ustedes, gracias por participar, gracias por formar parte de nuestra vida. Los queremos un montón.
                     </p>
                 </motion.div>
 
@@ -96,13 +90,8 @@ export default function SecondaryPlayerView({ players, realImpostorIndex, onBack
                         border: '1px solid rgba(200, 200, 200, 0.1)',
                     }}
                 >
-                    <p className="text-parchment/70 text-sm leading-relaxed mb-4"
-                        style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}
-                    >
-                        &ldquo;Gracias a todos por darme pelota en esta idea loca, se les quiere un montón.&rdquo;
-                    </p>
                     <p className="text-gold-accent text-sm font-mono tracking-widest">
-                        — Atte. Pondi 🤍
+                        Atte Pondi
                     </p>
                 </motion.div>
 

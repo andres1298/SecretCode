@@ -51,10 +51,10 @@ export const config: GameConfig = {
             isImpostor: false
         },
         {
-            name: "Ange",
-            photo: "/ange.jpeg",
-            clue: "Expresión",
-            isImpostor: true
+            name: "Isa",
+            photo: "/isa.jpeg",
+            clue: "3",
+            isImpostor: false
         },
         {
             name: "Ka",
@@ -69,10 +69,10 @@ export const config: GameConfig = {
             isImpostor: false
         },
         {
-            name: "Isa",
-            photo: "/isa.jpeg",
-            clue: "3",
-            isImpostor: false
+            name: "Ange",
+            photo: "/ange.jpeg",
+            clue: "Expresión",
+            isImpostor: true
         },
         {
             name: "Lu",
