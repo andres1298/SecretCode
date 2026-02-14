@@ -1,7 +1,13 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { FinalMessage as FinalMessageType, Player } from '@/config/config';
+import { Player } from '@/config/config';
+
+type FinalMessageType = {
+    victory: string;
+    defeat: string;
+    [key: string]: string;
+};
 
 interface FinalMessageProps {
     isVictory: boolean;
