@@ -1,67 +1,139 @@
-export interface Stage {
-    phrase: string;
-    hint: string;
+'use client';
+
+export interface Player {
+    name: string;
+    photo: string;
+    clue: string;
+    isImpostor: boolean;
 }
 
 export interface FinalMessage {
-    title: string;
-    subtitle: string;
-    message: string;
+    winTitle: string;
+    winSubtitle: string;
+    winMessage: string;
+    loseTitle: string;
+    loseSubtitle: string;
+    loseMessage: string;
 }
 
-export const config = {
-    // Frases secretas y sus hints - 5 etapas
-    stages: [
-        {
-            phrase: "codigo-alfa",
-            hint: "El nombre de nuestro primer proyecto juntos..."
-        },
-        {
-            phrase: "primavera-2024",
-            hint: "La estación y el año en que todo comenzó..."
-        },
-        {
-            phrase: "cafe-con-leche",
-            hint: "Tu bebida favorita cuando nos conocimos..."
-        },
-        {
-            phrase: "mil-estrellas",
-            hint: "Lo que prometimos contar aquella noche..."
-        },
-        {
-            phrase: "te-quiero",
-            hint: "Las palabras que siempre quiero decirte..."
-        },
-    ] as Stage[],
+export interface GameConfig {
+    theme: string;
+    introTitle: string;
+    introMessage: string;
+    introHint: string;
+    players: Player[];
+    finalMessage: FinalMessage;
+    images: string[];
+}
 
-    // Mensaje final de felicitación
+export const config: GameConfig = {
+    // La temática secreta que deben adivinar
+    theme: "Tatuaje",
+
+    // Pantalla de introducción
+    introTitle: "🎭 El Impostor — Mari Special Edition",
+    introMessage: "Hay un impostor entre tus amigos. Todos conocen la temática secreta… excepto uno de ellos. Recopila las pistas de cada jugador y descubre quién es el impostor.",
+    introHint: "Psst… si logras resolver todo, hay una sorpresita esperándote al final ✨",
+
+    // Jugadores con sus pistas
+    players: [
+        {
+            name: "Pondi",
+            photo: "/pondi.jpeg",
+            clue: "Adicción",
+            isImpostor: false
+        },
+        {
+            name: "Sebas",
+            photo: "/sebas.jpeg",
+            clue: "Colombia",
+            isImpostor: false
+        },
+        {
+            name: "Cami",
+            photo: "/cami.jpeg",
+            clue: "Marca",
+            isImpostor: false
+        },
+        {
+            name: "AleJ",
+            photo: "/alej.jpeg",
+            clue: "Piel",
+            isImpostor: false
+        },
+        {
+            name: "AleQ",
+            photo: "/aleq.jpeg",
+            clue: "iPod",
+            isImpostor: false
+        },
+        {
+            name: "MariU",
+            photo: "/mariu.jpeg",
+            clue: "Vaquita",
+            isImpostor: false
+        },
+        {
+            name: "Isa",
+            photo: "/isa.jpeg",
+            clue: "3",
+            isImpostor: false
+        },
+        {
+            name: "Alonso",
+            photo: "/alonso.jpeg",
+            clue: "Geométrico",
+            isImpostor: false
+        },
+        {
+            name: "Lu",
+            photo: "/lu.jpeg",
+            clue: "Rauw Alejandro",
+            isImpostor: false
+        },
+        {
+            name: "Ange",
+            photo: "/ange.jpeg",
+            clue: "Expresión",
+            isImpostor: true
+        },
+        {
+            name: "Ka",
+            photo: "/ka.jpeg",
+            clue: "Dolor",
+            isImpostor: false
+        },
+        {
+            name: "Lina",
+            photo: "/lina.jpeg",
+            clue: "Capas",
+            isImpostor: false
+        },
+    ],
+
+    // Mensajes finales
     finalMessage: {
-        title: "¡Misión Cumplida, Detective!",
-        subtitle: "Has descifrado todos los códigos secretos",
-        message: "Cada pista te trajo hasta aquí porque cada momento contigo es un tesoro que vale la pena descubrir. Feliz San Valentín ❤️"
-    } as FinalMessage,
+        winTitle: "🏆 ¡Victoria!",
+        winSubtitle: "Has descubierto al impostor",
+        winMessage: "Excelente trabajo, chiquitina. Has identificado al impostor y descubierto la temática secreta.",
+        loseTitle: "❌ ¡Perdiste!",
+        loseSubtitle: "El impostor ganó esta vez",
+        loseMessage: "El impostor logró pasar desapercibido. ¡Inténtalo de nuevo!"
+    },
 
-    // URLs de imágenes placeholder para el collage (20 imágenes)
+    // Imágenes para el carrusel de victoria
     images: [
-        "https://picsum.photos/seed/1/400/300",
-        "https://picsum.photos/seed/2/400/300",
-        "https://picsum.photos/seed/3/400/300",
-        "https://picsum.photos/seed/4/400/300",
-        "https://picsum.photos/seed/5/400/300",
-        "https://picsum.photos/seed/6/400/300",
-        "https://picsum.photos/seed/7/400/300",
-        "https://picsum.photos/seed/8/400/300",
-        "https://picsum.photos/seed/9/400/300",
-        "https://picsum.photos/seed/10/400/300",
-        "https://picsum.photos/seed/11/400/300",
-        "https://picsum.photos/seed/12/400/300",
-        "https://picsum.photos/seed/13/400/300",
-        "https://picsum.photos/seed/14/400/300",
-        "https://picsum.photos/seed/15/400/300",
-        "https://picsum.photos/seed/16/400/300",
-        "https://picsum.photos/seed/17/400/300",
-        "https://picsum.photos/seed/18/400/300",
-        "https://picsum.photos/seed/19/400/300",
-        "https://picsum.photos/seed/20/400/300",
+        "/pondi.jpeg",
+        "/sebas.jpeg",
+        "/cami.jpeg",
+        "/alej.jpeg",
+        "/aleq.jpeg",
+        "/mariu.jpeg",
+        "/isa.jpeg",
+        "/alonso.jpeg",
+        "/lu.jpeg",
+        "/ange.jpeg",
+        "/ka.jpeg",
+        "/lina.jpeg",
     ],
 };

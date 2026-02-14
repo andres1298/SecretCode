@@ -9,17 +9,17 @@ module.exports = {
     extend: {
       colors: {
         moss: {
-          dark: '#2d3a2d',
-          DEFAULT: '#4a5d4a',
-          medium: '#4a5d4a',
-          light: '#6b7f6b',
-          accent: '#8fa88f',
+          dark: '#1a2a3a',
+          DEFAULT: '#2a4a6a',
+          medium: '#2a4a6a',
+          light: '#4a7a9a',
+          accent: '#7ab8d8',
         },
-        parchment: '#f4f1e8',
+        parchment: '#f5f8fa',
         ink: '#1a1a1a',
         gold: {
-          DEFAULT: '#c4a962',
-          accent: '#c4a962',
+          DEFAULT: '#f0c040',
+          accent: '#f0c040',
         }
       },
       fontFamily: {

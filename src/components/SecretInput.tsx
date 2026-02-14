@@ -6,18 +6,22 @@ import { motion } from 'framer-motion';
 interface SecretInputProps {
     onCorrect: () => void;
     correctPhrase: string;
-    stageNumber: number;
+    playerName: string;
 }
 
-export default function SecretInput({ onCorrect, correctPhrase, stageNumber }: SecretInputProps) {
+export default function SecretInput({ onCorrect, correctPhrase, playerName }: SecretInputProps) {
     const [inputValue, setInputValue] = useState('');
     const [isShaking, setIsShaking] = useState(false);
     const [showError, setShowError] = useState(false);
 
+    const normalizeText = (text: string) => {
+        return text.toLowerCase().trim().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    };
+
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
 
-        if (inputValue === correctPhrase) {
+        if (normalizeText(inputValue) === normalizeText(correctPhrase)) {
             onCorrect();
             setInputValue('');
             setShowError(false);
@@ -40,13 +44,13 @@ export default function SecretInput({ onCorrect, correctPhrase, stageNumber }: S
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                     <label
-                        htmlFor={`secret-input-${stageNumber}`}
+                        htmlFor="clue-input"
                         className="block text-sm font-mono text-moss-accent mb-2 uppercase tracking-widest"
                     >
-                        Código de Acceso
+                        Pista de {playerName}
                     </label>
                     <motion.input
-                        id={`secret-input-${stageNumber}`}
+                        id="clue-input"
                         type="text"
                         value={inputValue}
                         onChange={(e) => {
@@ -58,16 +62,16 @@ export default function SecretInput({ onCorrect, correctPhrase, stageNumber }: S
                             transition: { duration: 0.5 }
                         } : {}}
                         className={`
-              w-full px-4 py-3 
-              bg-moss-dark/50 
-              border-2 ${showError ? 'border-red-500' : 'border-moss-light'}
-              rounded-lg
-              text-parchment text-lg font-mono
-              placeholder-moss-light/50
-              focus:outline-none focus:border-gold-accent
-              transition-colors duration-300
-            `}
-                        placeholder="Ingresa la frase secreta..."
+                            w-full px-4 py-3 
+                            bg-moss-dark/50 
+                            border-2 ${showError ? 'border-red-500' : 'border-moss-light'}
+                            rounded-lg
+                            text-parchment text-lg font-mono
+                            placeholder-moss-light/50
+                            focus:outline-none focus:border-gold-accent
+                            transition-colors duration-300
+                        `}
+                        placeholder="Escribe la pista que te dio..."
                         autoComplete="off"
                         autoFocus
                     />
@@ -80,7 +84,7 @@ export default function SecretInput({ onCorrect, correctPhrase, stageNumber }: S
                                 animate={{ opacity: 1, y: 0 }}
                                 className="text-red-400 text-sm font-mono"
                             >
-                                Código incorrecto. Intenta de nuevo.
+                                Pista incorrecta. Pregunta de nuevo.
                             </motion.p>
                         )}
                     </div>
@@ -91,17 +95,17 @@ export default function SecretInput({ onCorrect, correctPhrase, stageNumber }: S
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     className="
-            w-full py-3 px-6
-            bg-gradient-to-r from-moss-light to-moss-medium
-            hover:from-moss-medium hover:to-moss-light
-            text-parchment font-bold uppercase tracking-widest
-            rounded-lg
-            border border-gold-accent/30
-            shadow-lg shadow-black/30
-            transition-all duration-300
-          "
+                        w-full py-3 px-6
+                        bg-gradient-to-r from-moss-light to-moss-medium
+                        hover:from-moss-medium hover:to-moss-light
+                        text-parchment font-bold uppercase tracking-widest
+                        rounded-lg
+                        border border-gold-accent/30
+                        shadow-lg shadow-moss-dark/30
+                        transition-all duration-300
+                    "
                 >
-                    🔓 Verificar Código
+                    ✓ Confirmar Pista
                 </motion.button>
             </form>
         </motion.div>

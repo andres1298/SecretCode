@@ -1,13 +1,15 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { Player } from '@/config/config';
 
 interface HintDisplayProps {
-    hint: string;
+    player: Player;
     stageNumber: number;
+    totalStages: number;
 }
 
-export default function HintDisplay({ hint, stageNumber }: HintDisplayProps) {
+export default function HintDisplay({ player, stageNumber, totalStages }: HintDisplayProps) {
     return (
         <motion.div
             key={stageNumber}
@@ -16,41 +18,64 @@ export default function HintDisplay({ hint, stageNumber }: HintDisplayProps) {
             transition={{ duration: 0.5 }}
             className="relative w-full max-w-md mx-auto mb-8"
         >
-            {/* Tarjeta de expediente */}
-            <div className="paper-texture rounded-lg p-6 text-ink classified-stamp">
-                {/* Encabezado */}
-                <div className="flex items-center gap-3 mb-4 pb-3 border-b border-moss-medium/30">
-                    <div className="w-8 h-8 bg-moss-medium rounded-full flex items-center justify-center">
-                        <span className="text-parchment text-sm font-bold">📋</span>
-                    </div>
-                    <div>
-                        <h3 className="font-bold text-moss-dark uppercase tracking-wide text-sm">
-                            Archivo N° {stageNumber.toString().padStart(3, '0')}
-                        </h3>
-                        <p className="text-moss-medium text-xs font-mono">NIVEL DE ACCESO: RESTRINGIDO</p>
-                    </div>
+            {/* Tarjeta del jugador */}
+            <div className="bg-gradient-to-br from-moss-dark/80 to-moss-medium/60 rounded-2xl p-6 border border-moss-light/20 backdrop-blur-sm">
+                {/* Indicador de etapa */}
+                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                    <span className="bg-purple-600 text-white text-xs font-bold px-4 py-1 rounded-full shadow-lg">
+                        Pista {stageNumber} de {totalStages}
+                    </span>
                 </div>
 
-                {/* Contenido de la pista */}
-                <div className="space-y-3">
-                    <p className="text-xs font-mono text-moss-medium uppercase tracking-widest">
-                        Pista de Investigación:
-                    </p>
-                    <p className="text-lg font-detective text-moss-dark leading-relaxed italic">
-                        &ldquo;{hint}&rdquo;
-                    </p>
-                </div>
+                {/* Foto del jugador */}
+                <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ type: 'spring', stiffness: 200, delay: 0.2 }}
+                    className="flex justify-center mb-4 mt-2"
+                >
+                    <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-gold-accent shadow-xl">
+                        <img
+                            src={player.photo}
+                            alt={player.name}
+                            className="w-full h-full object-cover player-photo"
+                        />
+                    </div>
+                </motion.div>
 
-                {/* Decoración de esquina */}
-                <div className="absolute bottom-2 right-2 opacity-20">
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor" className="text-moss-dark">
-                        <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
-                    </svg>
-                </div>
+                {/* Nombre del jugador */}
+                <motion.h3
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                    className="text-2xl font-bold text-parchment text-center mb-2"
+                >
+                    {player.name}
+                </motion.h3>
+
+                {/* Instrucción */}
+                <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.4 }}
+                    className="text-moss-accent text-center text-sm font-mono"
+                >
+                    Pregúntale su pista e ingrésala abajo
+                </motion.p>
+
+                {/* Icono decorativo */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 0.3 }}
+                    transition={{ delay: 0.5 }}
+                    className="absolute bottom-3 right-3"
+                >
+                    <span className="text-3xl">🎭</span>
+                </motion.div>
             </div>
 
             {/* Sombra decorativa */}
-            <div className="absolute -bottom-2 left-2 right-2 h-4 bg-black/20 rounded-b-lg -z-10 blur-sm" />
+            <div className="absolute -bottom-2 left-2 right-2 h-4 bg-black/20 rounded-b-xl -z-10 blur-sm" />
         </motion.div>
     );
 }
