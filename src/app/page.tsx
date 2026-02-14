@@ -51,6 +51,7 @@ export default function Home() {
     const [pendingMode, setPendingMode] = useState<GameMode>('mari');
     const [cheatTapCount, setCheatTapCount] = useState(0);
     const [cheatTimer, setCheatTimer] = useState<NodeJS.Timeout | null>(null);
+    const [cheatActivated, setCheatActivated] = useState(false);
 
     const totalPlayers = config.players.length;
 
@@ -411,16 +412,20 @@ export default function Home() {
                             if (cheatTimer) clearTimeout(cheatTimer);
                             const newCount = cheatTapCount + 1;
                             if (newCount >= 5) {
-                                // Skip all clues
-                                const allIndices = config.players.map((_, i) => i);
-                                const allClues = config.players.map(p => p.clue);
-                                setGameState({
-                                    ...gameState,
-                                    collectedClues: allClues,
-                                    completedPlayerIndices: allIndices,
-                                    phase: 'transition-to-selecting'
-                                });
+                                // Show toast then skip
                                 setCheatTapCount(0);
+                                setCheatActivated(true);
+                                setTimeout(() => {
+                                    const allIndices = config.players.map((_, i) => i);
+                                    const allClues = config.players.map(p => p.clue);
+                                    setGameState({
+                                        ...gameState,
+                                        collectedClues: allClues,
+                                        completedPlayerIndices: allIndices,
+                                        phase: 'transition-to-selecting'
+                                    });
+                                    setCheatActivated(false);
+                                }, 1200);
                             } else {
                                 setCheatTapCount(newCount);
                                 const timer = setTimeout(() => setCheatTapCount(0), 2000);
@@ -434,6 +439,22 @@ export default function Home() {
                         Pregunta a cada jugador
                     </p>
                 </motion.div>
+
+                {/* Cheat toast */}
+                <AnimatePresence>
+                    {cheatActivated && (
+                        <motion.div
+                            initial={{ opacity: 0, y: -10, scale: 0.9 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            className="mb-4 px-5 py-3 bg-purple-900/70 border border-purple-400/50 rounded-xl text-center"
+                        >
+                            <p className="text-purple-200 text-sm font-mono">
+                                🎮 Konami Code ingresado! Completando todas las pistas...
+                            </p>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
 
                 {/* Vista general de jugadores */}
                 <PlayerOverview
