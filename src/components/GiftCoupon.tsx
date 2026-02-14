@@ -30,12 +30,33 @@ export default function GiftCoupon({ onRestart, onViewStages }: GiftCouponProps)
                 backgroundColor: '#0a0a0a',
             });
 
-            const link = document.createElement('a');
-            link.download = 'cupon-tatuaje.png';
-            link.href = dataUrl;
-            link.click();
+            // Convert data URL to blob
+            const res = await fetch(dataUrl);
+            const blob = await res.blob();
+            const file = new File([blob], 'cupon-tatuaje.png', { type: 'image/png' });
+
+            // Try Web Share API first (works great on mobile)
+            if (navigator.share && navigator.canShare?.({ files: [file] })) {
+                await navigator.share({
+                    files: [file],
+                    title: 'Cupón de Tatuaje',
+                });
+            } else {
+                // Desktop fallback: download via link
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.download = 'cupon-tatuaje.png';
+                link.href = url;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+            }
         } catch (err) {
-            console.error('Error downloading coupon:', err);
+            // If user cancels share, that's okay
+            if ((err as Error)?.name !== 'AbortError') {
+                console.error('Error downloading coupon:', err);
+            }
         } finally {
             setIsDownloading(false);
         }
