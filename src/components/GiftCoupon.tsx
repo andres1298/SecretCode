@@ -182,7 +182,7 @@ export default function GiftCoupon({ onRestart, onViewStages }: GiftCouponProps)
                                 className="text-sm mb-2 leading-relaxed font-mono"
                                 style={{ color: 'rgba(200, 200, 200, 0.5)' }}
                             >
-                                Elige el que gustes. Este cupón no tiene fecha de vencimiento.
+                                Este cupón no tiene fecha de vencimiento.
                             </p>
 
                             {/* Personal message */}

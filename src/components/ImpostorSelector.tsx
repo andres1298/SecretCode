@@ -75,7 +75,7 @@ export default function ImpostorSelector({
             </AnimatePresence>
 
             {/* Grid de jugadores */}
-            <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-3 mb-8 max-w-5xl w-full">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-8 max-w-4xl w-full">
                 {players.map((player, index) => {
                     const isExcluded = excludedIndices.includes(index);
                     return (
@@ -118,12 +118,12 @@ export default function ImpostorSelector({
                             </div>
 
                             {/* Nombre */}
-                            <p className={`font-bold text-sm truncate ${isExcluded ? 'text-gray-500' : 'text-parchment'}`}>
+                            <p className={`font-bold text-sm ${isExcluded ? 'text-gray-500' : 'text-parchment'}`}>
                                 {player.name}
                             </p>
 
                             {/* Pista ingresada */}
-                            <p className={`text-xs mt-1 font-mono truncate ${isExcluded ? 'text-gray-600' : 'text-moss-accent'}`}>
+                            <p className={`text-xs mt-1 font-mono ${isExcluded ? 'text-gray-600' : 'text-moss-accent'}`}>
                                 "{player.clue}"
                             </p>
 

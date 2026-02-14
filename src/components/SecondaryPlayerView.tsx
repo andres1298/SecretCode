@@ -15,6 +15,7 @@ export default function SecondaryPlayerView({ players, realImpostorIndex, onBack
     const [wrongGuesses, setWrongGuesses] = useState<number[]>([]);
     const [lastWrongName, setLastWrongName] = useState<string | null>(null);
     const [hasWon, setHasWon] = useState(false);
+    const [showThanks, setShowThanks] = useState(false);
 
     const handleVote = () => {
         if (selectedIndex === null) return;
@@ -33,6 +34,97 @@ export default function SecondaryPlayerView({ players, realImpostorIndex, onBack
         setSelectedIndex(index);
     };
 
+    // === THANK YOU SCREEN ===
+    if (showThanks) {
+        return (
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="min-h-screen flex flex-col items-center justify-center p-6"
+            >
+                <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ type: 'spring', stiffness: 150, delay: 0.2 }}
+                    className="text-6xl mb-6"
+                >
+                    💜
+                </motion.div>
+
+                <motion.h2
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 }}
+                    className="text-2xl md:text-3xl font-bold text-gold-accent text-center mb-6"
+                >
+                    ¡Gracias por participar!
+                </motion.h2>
+
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6 }}
+                    className="max-w-lg text-center space-y-4 mb-10"
+                >
+                    <p className="text-parchment/80 text-base leading-relaxed">
+                        Esto es una dinámica especial para <span className="text-gold-accent font-bold">Mari</span>.
+                        La idea es que a través de un juego que ama, pueda descubrir un regalito que le preparé
+                        para esta fecha.
+                    </p>
+                    <p className="text-parchment/60 text-sm leading-relaxed">
+                        Ese regalo muchos sabrán que nos ha repetido y contado miles de veces:
+                        <span className="text-parchment font-semibold italic"> un pequeño tatuaje</span>. 🖤
+                    </p>
+                </motion.div>
+
+                {/* Divider */}
+                <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: '120px' }}
+                    transition={{ delay: 0.8, duration: 0.6 }}
+                    className="h-px bg-gradient-to-r from-transparent via-gold-accent/40 to-transparent mb-8"
+                />
+
+                {/* Personal message from Pondi */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1 }}
+                    className="p-6 rounded-2xl max-w-md text-center"
+                    style={{
+                        background: 'linear-gradient(145deg, rgba(15, 15, 15, 0.9) 0%, rgba(25, 25, 25, 0.8) 100%)',
+                        border: '1px solid rgba(200, 200, 200, 0.1)',
+                    }}
+                >
+                    <p className="text-parchment/70 text-sm leading-relaxed mb-4"
+                        style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}
+                    >
+                        &ldquo;Gracias a todos por darme pelota en esta idea loca, se les quiere un montón.&rdquo;
+                    </p>
+                    <p className="text-gold-accent text-sm font-mono tracking-widest">
+                        — Atte. Pondi 🤍
+                    </p>
+                </motion.div>
+
+                <motion.button
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1.5 }}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={onBack}
+                    className="mt-10 px-6 py-3
+                        bg-moss-medium/60 hover:bg-moss-light/60
+                        text-parchment font-mono text-sm uppercase tracking-widest
+                        rounded-lg transition-all duration-300"
+                >
+                    ← Volver al inicio
+                </motion.button>
+            </motion.div>
+        );
+    }
+
+    // === MAIN VOTING VIEW ===
     return (
         <motion.div
             initial={{ opacity: 0 }}
@@ -185,15 +277,16 @@ export default function SecondaryPlayerView({ players, realImpostorIndex, onBack
                         <motion.button
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
-                            onClick={onBack}
+                            onClick={() => setShowThanks(true)}
                             className="
-                                px-6 py-3
-                                bg-moss-medium/60 hover:bg-moss-light/60
-                                text-parchment font-mono text-sm uppercase tracking-widest
-                                rounded-lg transition-all duration-300
+                                px-8 py-3
+                                bg-gradient-to-r from-moss-light to-moss-medium
+                                hover:from-moss-medium hover:to-moss-light
+                                text-parchment font-bold uppercase tracking-widest
+                                rounded-xl shadow-xl transition-all duration-300
                             "
                         >
-                            ← Volver al inicio
+                            Continuar →
                         </motion.button>
                     </motion.div>
                 )}
